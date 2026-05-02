@@ -45,22 +45,24 @@ typedef struct {
 static_assert ( offsetof(PCAN_Message, DATA) == offsetof(TPCANMsg, DATA), "Layout Mismatch" );
 static_assert ( sizeof(PCAN_Message) == sizeof(TPCANMsg), "Size Mismatch" );
 
+
 /* **************************************************************************************************** */
 /**
- * @class       DriverPCAN
- * @brief       PCAN Driver For CAN According To ISO 11898-1
+ * @class DriverPCAN
+ * @brief PCAN Driver For CAN According To ISO 11898-1
  */
 /* ---------------------------------------------------------------------------------------------------- */
 class DriverPCAN {
-  private:
+  private : // Private Members
     inline void MesageToPCAN (const PCAN_Message &Source, TPCANMsg &Destination);
     inline void MesageFromPCAN (const TPCANMsg &Source, PCAN_Message &Destination);
 
-  public:
+  public : // Public Members
     TPCANMsg MESSAGE;
 
     TPCANStatus Initialize (const uint16_t KBPS = 500);
     TPCANStatus Uninitialize (void);
+    TPCANStatus Reset (void);
 
     uint8_t Write (const uint32_t CanID, uint8_t* Data, const uint8_t Length = 8, const PCAN_MessageType Type = PCAN_STD);
     uint8_t Write (const PCAN_Message MSG);

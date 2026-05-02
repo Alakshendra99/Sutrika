@@ -42,7 +42,7 @@ void ConsoleColor (CONSOLECOLOURS Colour = CONSOLECOLOUR_WHITE, CONSOLECOLOURS B
   SetConsoleTextAttribute(ConsoleHandle, ConsoleColour);
 }
 
-std::string ShowCAN (TPCANMsg MSG) {
+void ShowCAN (TPCANMsg MSG) {
   cout << "CAN : ";
   cout << std::hex << std::uppercase << std::setw(3) << std::setfill('0') << MSG.ID;
   cout << std::dec;

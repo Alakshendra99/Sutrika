@@ -31,6 +31,8 @@
 		</Compiler>
 		<Unit filename="main.cpp" />
 		<Unit filename="tools/DriverPCAN.cpp" />
+		<Unit filename="tools/DoCAN.cpp" />
+		<Unit filename="tools/Tools.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

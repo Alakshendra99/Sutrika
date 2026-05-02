@@ -18,8 +18,6 @@
 #include <cstdio>
 #include <iomanip>
 
-using namespace std;
-
 
 /* **************************************************************************************************** */
 /* ---------------------------------------------------------------------------------------------------- */
@@ -74,33 +72,33 @@ TPCANStatus DriverPCAN::Initialize (const uint16_t KBPS) {
   if (KBPS == 500) {
     Speed = PCAN_BAUD_500K;
 #ifdef PCAN_VERBOSE
-    cout << "\nPCAN Speed Set To 500KBPS";
+    std::cout << "\nPCAN Speed Set To 500KBPS";
 #endif
   } else if (KBPS == 250) {
     Speed = PCAN_BAUD_250K;
 #ifdef PCAN_VERBOSE
-    cout << "\nPCAN Speed Set To 250KBPS";
+    std::cout << "\nPCAN Speed Set To 250KBPS";
 #endif
   } else if (KBPS == 1000) {
     Speed = PCAN_BAUD_1M;
 #ifdef PCAN_VERBOSE
-    cout << "\nPCAN Speed Set To 1MBPS";
+    std::cout << "\nPCAN Speed Set To 1MBPS";
 #endif
   } else {
     Speed = PCAN_BAUD_500K;
 #ifdef PCAN_VERBOSE
-    cout << "\nPCAN Speed Defaulted To 500KBPS";
+    std::cout << "\nPCAN Speed Defaulted To 500KBPS";
 #endif
   }
   TPCANStatus Status;
   Status = CAN_Initialize (PCAN_USBBUS1, Speed);
   if (Status != PCAN_ERROR_OK) {
 #ifdef PCAN_VERBOSE
-    cout << "\nPCAN Initialization Failed!\nConnect Device Properly";
+    std::cout << "\nPCAN Initialization Failed!\nConnect Device Properly";
 #endif
   } else {
 #ifdef PCAN_VERBOSE
-    cout << "\nPCAN Initialized Successfully\nPCAN Ready For Use";
+    std::cout << "\nPCAN Initialized Successfully\nPCAN Ready For Use";
 #endif
   }
   return Status;
@@ -117,8 +115,20 @@ TPCANStatus DriverPCAN::Initialize (const uint16_t KBPS) {
 TPCANStatus DriverPCAN::Uninitialize (void) {
   TPCANStatus Status;
   Status = CAN_Uninitialize (PCAN_USBBUS1);
-  cout << "\nPCAN Uninitialized\nSafe To Disconnect";
+  std::cout << "\nPCAN Uninitialized\nSafe To Disconnect";
   return Status;
+}
+/* **************************************************************************************************** */
+
+/* **************************************************************************************************** */
+/* ---------------------------------------------------------------------------------------------------- */
+/**
+ * @brief PCAN Driver Reset The TX & RX Queues
+ * @class DriverPCAN (Public)
+ * @return (TPCANStatus) PCAN Error Code  
+ */
+TPCANStatus DriverPCAN::Reset (void) {
+  return CAN_Reset(PCAN_USBBUS1);
 }
 /* **************************************************************************************************** */
 
@@ -261,12 +271,12 @@ TPCANStatus DriverPCAN::Filter (const uint32_t CanID, const PCAN_MessageType Typ
 void DriverPCAN::Show (const PCAN_Message MSG, const TPCANTimestamp Time) {
   uint64_t uSec = 0;
   uSec = Time.micros + (1000ULL * Time.millis) + (0x100000000ULL * 1000ULL * Time.millis_overflow);
-  cout << std::hex << std::uppercase << std::setw(16) << std::setfill('0') << "\nTime (us) : " << uSec;
-  cout << std::hex << std::uppercase << std::setw(3) << std::setfill('0') << " CAN ID : " << MSG.ID;
-  cout << (( MSG.TYPE == PCAN_MESSAGE_STANDARD ) ? " : STD" : " : EXT");
-  cout << std::hex << std::uppercase << std::setw(1) << std::setfill('0') << " : " << MSG.LEN;
+  std::cout << std::hex << std::uppercase << std::setw(16) << std::setfill('0') << "\nTime (us) : " << uSec;
+  std::cout << std::hex << std::uppercase << std::setw(3) << std::setfill('0') << " CAN ID : " << MSG.ID;
+  std::cout << (( MSG.TYPE == PCAN_MESSAGE_STANDARD ) ? " : STD" : " : EXT");
+  std::cout << std::hex << std::uppercase << std::setw(1) << std::setfill('0') << " : " << MSG.LEN;
   for (int I = 0; I < MSG.LEN; I++) {
-    cout << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << " " << (int)MSG.DATA[I];
+    std::cout << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << " " << (int)MSG.DATA[I];
   }
 }
 /* **************************************************************************************************** */
@@ -279,16 +289,16 @@ void DriverPCAN::Show (const PCAN_Message MSG, const TPCANTimestamp Time) {
  * @param MSG CAN Message Structure
  */
 void DriverPCAN::Show (const PCAN_Message MSG) {
-  cout << "\nCAN : ";
-  cout << std::hex << std::uppercase << std::setw(3) << std::setfill('0') << MSG.ID;
-  cout << std::dec;
-  cout << (( MSG.TYPE == PCAN_MESSAGE_STANDARD ) ? " : STD : " : " : EXT : ");
-  cout << (int)MSG.LEN;
-  cout << " : ";
+  std::cout << "\nCAN : ";
+  std::cout << std::hex << std::uppercase << std::setw(3) << std::setfill('0') << MSG.ID;
+  std::cout << std::dec;
+  std::cout << (( MSG.TYPE == PCAN_MESSAGE_STANDARD ) ? " : STD : " : " : EXT : ");
+  std::cout << (int)MSG.LEN;
+  std::cout << " : ";
   for (int I = 0; I < MSG.LEN; I++) {
-    cout << " ";
-    cout << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << (int)MSG.DATA[I];
+    std::cout << " ";
+    std::cout << std::hex << std::uppercase << std::setw(2) << std::setfill('0') << (int)MSG.DATA[I];
   }
-  cout << std::dec;
+  std::cout << std::dec;
 }
 /* **************************************************************************************************** */

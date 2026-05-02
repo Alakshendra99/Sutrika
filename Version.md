@@ -21,3 +21,8 @@
 - Made .hpp split into .cpp and .hpp files.
 - Making Monolith Framework to Modular Framework.
 - Completed PCAN Driver.
+
+#### v3.0:1
+- Completed TimeKeeper Utility.
+- Completed Logger Utility.
+- Completed DoCAN Layer With Logging.
