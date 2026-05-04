@@ -1,0 +1,23 @@
+{
+  "name": "sutrika",
+  "version": "1.0.0",
+  "description": "Sutrika",
+  "keywords": [
+    "Sutrika"
+  ],
+  "license": "ISC",
+  "author": "Alakshendra Singh",
+  "type": "commonjs",
+  "main": "Main.js",
+  "scripts": {
+    "build:addon": "cmake-js compile --runtime=electron --runtime-version=28.0.0 -G \"MinGW Makefiles\"",
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "cmake-js": "^8.0.0",
+    "electron": "^41.5.0"
+  },
+  "dependencies": {
+    "node-addon-api": "^8.7.0"
+  }
+}

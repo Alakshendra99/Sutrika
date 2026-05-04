@@ -26,3 +26,6 @@
 - Completed TimeKeeper Utility.
 - Completed Logger Utility.
 - Completed DoCAN Layer With Logging.
+
+#### v3.0:2
+- Everything Broken

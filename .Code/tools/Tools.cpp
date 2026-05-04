@@ -13,7 +13,6 @@
 
 #include "Tools.hpp"
 
-#include <windows.h>
 #include <filesystem>
 #include <fstream>
 #include <iomanip>
@@ -190,15 +189,7 @@ int Logger::State (bool IsOn, LOG_TYPE Type) {
     Stop();
   }
 
-  std::vector<wchar_t> Buffer(260);
-  while (true) {
-    DWORD Size = GetModuleFileNameW(nullptr, Buffer.data(), Buffer.size());
-    if (Size == 0) { return 2; }
-    if (Size < Buffer.size() - 1) { break; }
-    Buffer.resize(Buffer.size() * 2);
-  }
-  std::filesystem::path exeDir(Buffer.data());
-  exeDir = exeDir.parent_path();
+  std::filesystem::path exeDir = std::filesystem::current_path();
   std::filesystem::path LogDir = exeDir / "Logs";
   std::filesystem::create_directories(LogDir);
   auto now = std::chrono::system_clock::now();

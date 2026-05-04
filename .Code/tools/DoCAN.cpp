@@ -493,7 +493,7 @@ int ISO_DoCAN::Write (bool IsFunctional) {
  * @return (int) Active Low Flag
  * @retval Zero (0) All OK & Non-Zero Means Issue
  */
-int ISO_DoCAN::Transfer (bool IsFunctional = false) {
+int ISO_DoCAN::Transfer (bool IsFunctional) {
   CONFIG.ERRORCODE = DoCAN_ERR_OK;
   int Status = 0;
   PCAN.Reset();
@@ -515,7 +515,7 @@ int ISO_DoCAN::Transfer (bool IsFunctional = false) {
  * @brief Configures The Logger Instance Used By The DoCAN Layer
  * @class ISO_DoCAN (Public)
  * @param LoggerInstance Logger Instance Pointer
- * @return int 
+ * @return int
  */
 int ISO_DoCAN::SetLogger (Logger* LoggerInstance) {
   if (LoggerInstance == nullptr) { return 1; }
@@ -551,7 +551,7 @@ int ISO_DoCAN::SetSettings (uint64_t Timeout, uint8_t Padding, uint8_t STMin) {
  * @param LEN Data Buffer Length Receive Pointer
  * @param DATA Data Buffer Pointer
  * @param MaxLength Data Buffer Length
- * @return (int) Active Low Flag 
+ * @return (int) Active Low Flag
  */
 int ISO_DoCAN::SetBuffer (uint32_t* CANID, uint16_t* LEN, uint8_t* DATA, uint16_t MaxLength) {
   if ((CANID == nullptr) || (LEN == nullptr) || (DATA == nullptr) || (MaxLength == 0)) {
@@ -576,9 +576,9 @@ int ISO_DoCAN::SetBuffer (uint32_t* CANID, uint16_t* LEN, uint8_t* DATA, uint16_
  * @param TypeRX Receive CAN Frame Type
  * @param FUNID Functional CAN ID
  * @param TypeFUN Functional CAN Frame Type
- * @return (int) Active Low Flag 
+ * @return (int) Active Low Flag
  */
-int ISO_DoCAN::SetCANIDs (uint32_t TXID, PCAN_MessageType TypeTX, uint32_t RXID, PCAN_MessageType TypeRX, 
+int ISO_DoCAN::SetCANIDs (uint32_t TXID, PCAN_MessageType TypeTX, uint32_t RXID, PCAN_MessageType TypeRX,
     uint32_t FUNID, PCAN_MessageType TypeFUN) {
   if ((FUNID > 0x7FF) && (TypeFUN == PCAN_STD)) { return 1; }
   if ((TXID > 0x7FF) && (TypeTX == PCAN_STD)) { return 1; }
@@ -597,7 +597,7 @@ int ISO_DoCAN::SetCANIDs (uint32_t TXID, PCAN_MessageType TypeTX, uint32_t RXID,
   uint32_t MAX = std::max({CONFIG.CANID.FUN.ID, CONFIG.CANID.TX.ID, CONFIG.CANID.RX.ID});
   uint32_t MIN = std::min({CONFIG.CANID.FUN.ID, CONFIG.CANID.TX.ID, CONFIG.CANID.RX.ID});
   PCAN_MessageType Type = PCAN_STD;
-  if ((CONFIG.CANID.TX.TYPE == PCAN_EXT) || (CONFIG.CANID.RX.TYPE == PCAN_EXT) || 
+  if ((CONFIG.CANID.TX.TYPE == PCAN_EXT) || (CONFIG.CANID.RX.TYPE == PCAN_EXT) ||
       (CONFIG.CANID.FUN.TYPE == PCAN_EXT)) {
     Type = PCAN_EXT;
   }
@@ -613,7 +613,7 @@ int ISO_DoCAN::SetCANIDs (uint32_t TXID, PCAN_MessageType TypeTX, uint32_t RXID,
 /**
  * @brief Focus Hardware Filter on Receive CAN ID Only
  * @class ISO_DoCAN (Public)
- * @return (int) Active Low Flag 
+ * @return (int) Active Low Flag
  */
 int ISO_DoCAN::FocusRX (void) {
   if ( PCAN.Filter (CONFIG.CANID.RX.ID, CONFIG.CANID.RX.TYPE) != PCAN_ERROR_OK) {
@@ -664,18 +664,18 @@ DoCAN_ERROR ISO_DoCAN::GetErrorCode (void) {
  */
 DoCAN_ERROR ISO_DoCAN::Start (DoCAN_ConfigureStructure Setting) {
   PCAN.Uninitialize();
-  
-  if ( SetSettings (Setting.SETTINGS.TIMEOUT, Setting.SETTINGS.PADDING, Setting.SETTINGS.STMIN) != 0) 
+
+  if ( SetSettings (Setting.SETTINGS.TIMEOUT, Setting.SETTINGS.PADDING, Setting.SETTINGS.STMIN) != 0)
     { return DoCAN_ERR_WRONGDATA; }
-  if ( SetBuffer (Setting.BUFFER.CANID, Setting.BUFFER.LEN, Setting.BUFFER.DATA, 
-      Setting.BUFFER.MAXLENGTH) ) 
+  if ( SetBuffer (Setting.BUFFER.CANID, Setting.BUFFER.LEN, Setting.BUFFER.DATA,
+      Setting.BUFFER.MAXLENGTH) )
     { return DoCAN_ERR_WRONGDATA; }
-  
+
   CONFIG.SETTINGS.SPEED = Setting.SETTINGS.SPEED;
-  if ( PCAN.Initialize (CONFIG.SETTINGS.SPEED) != PCAN_ERROR_OK) 
+  if ( PCAN.Initialize (CONFIG.SETTINGS.SPEED) != PCAN_ERROR_OK)
     { return DoCAN_ERR_DRIVERFAILURE; }
-  
-  int Status = SetCANIDs (Setting.CANID.TX.ID, Setting.CANID.TX.TYPE, Setting.CANID.RX.ID, 
+
+  int Status = SetCANIDs (Setting.CANID.TX.ID, Setting.CANID.TX.TYPE, Setting.CANID.RX.ID,
       Setting.CANID.RX.TYPE, Setting.CANID.FUN.ID, Setting.CANID.FUN.TYPE);
   if (Status == 1)      { return DoCAN_ERR_WRONGDATA; }
   else if (Status == 2) { return DoCAN_ERR_DRIVERFAILURE; }
