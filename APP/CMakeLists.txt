@@ -66,101 +66,33 @@ set(COMMON_INCLUDES
     ${CMAKE_SOURCE_DIR}/node_modules/node-addon-api/include
 )
 
-# TimeKeeper Static Library
-add_library(timekeeper_lib STATIC API/Static/TimeKeeper.cpp)
-target_include_directories(timekeeper_lib PUBLIC ${CMAKE_SOURCE_DIR}/API/Static)
-
-# logger.node
-add_library(logger_lib STATIC
-    API/Static/Logger.cpp
-)
-target_include_directories(logger_lib PUBLIC
-    ${CMAKE_SOURCE_DIR}/API/Static
-)
-add_library(logger_addon SHARED
-    API/Logger_API.cpp
-)
-set_target_properties(logger_addon PROPERTIES
-    PREFIX ""
-    SUFFIX ".node"
-    OUTPUT_NAME "logger"
-)
-target_include_directories(logger_addon PRIVATE
-    ${COMMON_INCLUDES}
-    ${CMAKE_SOURCE_DIR}/API/Static
-)
-target_link_libraries(logger_addon PRIVATE
-    logger_lib
-    ${NODE_IMPLIB}
-)
-add_dependencies(logger_addon electron_implib)
-target_compile_definitions(logger_addon PRIVATE
-    NAPI_CPP_EXCEPTIONS
-)
-
-
 # pcan.node
-add_library(pcan_lib STATIC
-    API/Static/PCAN.cpp
+add_library(Sutrika_Lib STATIC
+    API/Static/Sutrika.cpp
 )
-target_include_directories(pcan_lib PUBLIC
+target_include_directories(Sutrika_Lib PUBLIC
     ${CMAKE_SOURCE_DIR}/API/Static
     ${CMAKE_SOURCE_DIR}/API/External
 )
-add_library(pcan_addon SHARED
-    API/PCAN_API.cpp
+add_library(Sutrika_AddOn SHARED
+    API/Sutrika_API.cpp
 )
-set_target_properties(pcan_addon PROPERTIES
+set_target_properties(Sutrika_AddOn PROPERTIES
     PREFIX ""
     SUFFIX ".node"
-    OUTPUT_NAME "pcan"
+    OUTPUT_NAME "sutrika"
 )
-target_include_directories(pcan_addon PRIVATE
+target_include_directories(Sutrika_AddOn PRIVATE
     ${COMMON_INCLUDES}
     ${CMAKE_SOURCE_DIR}/API/Static
     ${CMAKE_SOURCE_DIR}/API/External
 )
-target_link_libraries(pcan_addon PRIVATE
-    pcan_lib
+target_link_libraries(Sutrika_AddOn PRIVATE
+    Sutrika_Lib
     ${PCAN_IMPLIB}
     ${NODE_IMPLIB}
 )
-add_dependencies(pcan_addon pcan_implib electron_implib)
-target_compile_definitions(pcan_addon PRIVATE
+add_dependencies(Sutrika_AddOn pcan_implib electron_implib)
+target_compile_definitions(Sutrika_AddOn PRIVATE
     NAPI_CPP_EXCEPTIONS
 )
-
-
-# docan.node
-add_library(docan_lib STATIC
-    API/Static/DoCAN.cpp
-)
-target_include_directories(docan_lib PUBLIC
-    ${CMAKE_SOURCE_DIR}/API/Static
-    ${CMAKE_SOURCE_DIR}/API/External
-)
-target_link_libraries(docan_lib PUBLIC
-    logger_lib
-    timekeeper_lib
-    pcan_lib
-    ${PCAN_IMPLIB}
-)
-add_library(docan_addon SHARED
-    API/DoCAN_API.cpp
-)
-set_target_properties(docan_addon PROPERTIES
-    PREFIX ""
-    SUFFIX ".node"
-    OUTPUT_NAME "docan"
-)
-target_include_directories(docan_addon PRIVATE
-    ${COMMON_INCLUDES}
-    ${CMAKE_SOURCE_DIR}/API/Static
-    ${CMAKE_SOURCE_DIR}/API/External
-)
-target_link_libraries(docan_addon PRIVATE
-    docan_lib
-    ${NODE_IMPLIB}
-)
-add_dependencies(docan_addon electron_implib)
-target_compile_definitions(docan_addon PRIVATE NAPI_CPP_EXCEPTIONS)

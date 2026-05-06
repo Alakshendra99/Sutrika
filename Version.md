@@ -29,3 +29,8 @@
 
 #### v3.0:2
 - Everything Broken
+
+#### v3.0:3
+- Made Sutrika Monolith Framework for C++ Library.
+- Made a N-API Wrapper for Sutrika C++ Library.
+
