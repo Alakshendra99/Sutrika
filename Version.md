@@ -34,3 +34,7 @@
 - Made Sutrika Monolith Framework for C++ Library.
 - Made a N-API Wrapper for Sutrika C++ Library.
 
+#### v3.0:4
+- Made Sutrika Link Statically
+- Tested Sutrika Engine
+- Made Primitive UI

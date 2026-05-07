@@ -1,0 +1,23 @@
+.feature-card {
+  cursor: pointer;
+  transition: all 0.25s ease;
+  border-radius: 18px;
+}
+
+.feature-card:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18) !important;
+}
+
+.feature-card .display-6 {
+  transition: transform 0.25s ease;
+}
+
+.feature-card:hover .display-6 {
+  transform: scale(1.15) rotate(-5deg);
+}
+
+#LoggingToggle {
+  transform: scale(1.5);
+  cursor: pointer;
+}

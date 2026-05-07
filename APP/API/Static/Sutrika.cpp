@@ -165,10 +165,10 @@ void Sutrika::LogStop (void) {
  * @retval Zero (0) All OK & Non-Zero Means Issue
  */
 int Sutrika::LogState(bool IsOn, LOG_TYPE Type) {
-  if (!IsOn) { LogStop(); return 0; }
-  if ((Type != LOG_TEXT) && (Type != LOG_UDS) && (Type != LOG_CAN)) { return 1; }
+  if (!IsOn) { LogStop(); return (int)Sutrika_ERR_OK;; }
+  if ((Type != LOG_TEXT) && (Type != LOG_UDS) && (Type != LOG_CAN)) { return (int)Sutrika_ERR_WRONGDATA; }
   if (LogStatus.STARTED) {
-    if (Type == LogStatus.TYPE) { return 0; }
+    if (Type == LogStatus.TYPE) { return (int)Sutrika_ERR_OK; }
     LogStop();
   }
 
@@ -194,7 +194,7 @@ int Sutrika::LogState(bool IsOn, LOG_TYPE Type) {
 #endif
 
   File.open(LogFilePath, std::ios::app);
-  if (!File.is_open()) { return 2; }
+  if (!File.is_open()) { return (int)Sutrika_ERR_INTERNALISSUE; }
   if (IsNewFile) {
     File << "SUTRIKA " << LogSuffix[Type] << " LOGGER!\n";
     File << "START TIME : " << std::put_time(LocalTime, "%Y-%m-%d %H:%M") << "\n";
@@ -204,7 +204,7 @@ int Sutrika::LogState(bool IsOn, LOG_TYPE Type) {
 
   LogStatus.TYPE = Type;
   LogStatus.STARTED = true;
-  return 0;
+  return (int)Sutrika_ERR_OK;
 }
 
 
@@ -573,8 +573,8 @@ int Sutrika::DoCAN_SendData (bool IsFunctional) {
     MSG.TYPE = CONFIG.CANID.FUN.TYPE;
     MSG.ID = CONFIG.CANID.FUN.ID;
   } else {
-    MSG.TYPE = CONFIG.CANID.TX.TYPE;
-    MSG.ID = CONFIG.CANID.TX.ID;
+    MSG.TYPE = CONFIG.CANID.REQ.TYPE;
+    MSG.ID = CONFIG.CANID.REQ.ID;
   }
   MSG.LEN = 8;
   for (int I = 0; I < 8; I++) {
@@ -599,8 +599,8 @@ int Sutrika::DoCAN_TransmitFlowControl (const bool Abort) {
     MSG.TYPE = CONFIG.CANID.FUN.TYPE;
     MSG.ID = CONFIG.CANID.FUN.ID;
   } else {
-    MSG.TYPE = CONFIG.CANID.TX.TYPE;
-    MSG.ID = CONFIG.CANID.TX.ID;
+    MSG.TYPE = CONFIG.CANID.REQ.TYPE;
+    MSG.ID = CONFIG.CANID.REQ.ID;
   }
   for (int I = 3; I < 8; I++) {
     MSG.DATA[I] = CONFIG.SETTINGS.PADDING;
@@ -634,23 +634,23 @@ int Sutrika::DoCAN_ReceiveFlowControl (uint8_t &BS, uint8_t &STMin) {
   PCAN_Message MSG;
   do {
     if (PCAN_Read (MSG) == PCAN_ERROR_OK) {
-      if ((MSG.TYPE == CONFIG.CANID.RX.TYPE) && (MSG.ID == CONFIG.CANID.RX.ID) && (MSG.LEN == 8)) {
+      if ((MSG.TYPE == CONFIG.CANID.RES.TYPE) && (MSG.ID == CONFIG.CANID.RES.ID) && (MSG.LEN == 8)) {
         DoCAN_LogFrame (MSG.ID, MSG.TYPE, MSG.DATA, 'R');
         if (MSG.DATA[0] == 0x30) {
           BS = MSG.DATA[1];
           STMin = MSG.DATA[2];
-          return 0;
+          return (int)Sutrika_ERR_OK;
         } else if (MSG.DATA[0] == 0x31) { // FS : Wait
           CycleTime = MicroClock();
         }
         else if (MSG.DATA[0] == 0x32) { // FS : Abort
-          return 1;
+          return (int)Sutrika_ERR_NOTRECEIVED;
         }
       }
     }
   } while (((MicroClock() - CycleTime) < CONFIG.SETTINGS.TIMEOUT) &&
       ((MicroClock() - OverallTime) < OverallTimeout));
-  return 1;
+  return (int)Sutrika_ERR_TIMEOUT;
 }
 
 
@@ -669,11 +669,11 @@ int Sutrika::DoCAN_FrameRX_SF (void) {
       CONFIG.BUFFER.DATA[I] = CONFIG.MESSAGE[I+1];
     }
     CONFIG.RX.DONE = 1;
-    return 0;
+    return (int)Sutrika_ERR_OK;
   } else {
     CONFIG.ERRORCODE = Sutrika_ERR_FRAMEISSUE;
     CONFIG.RX.DONE = 0;
-    return 1;
+    return (int)Sutrika_ERR_FRAMEISSUE;
   }
 }
 
@@ -701,18 +701,19 @@ int Sutrika::DoCAN_FrameRX_FF (void) {
     if ( DoCAN_TransmitFlowControl (false) ) {
       CONFIG.ERRORCODE = Sutrika_ERR_INTERNALISSUE;
       CONFIG.RX.DONE = 0;
-      return 1;
+      return (int)Sutrika_ERR_INTERNALISSUE;
     }
     CONFIG.RX.TIME = MicroClock();
     CONFIG.RX.FRAMES++;
-    return 0;
+    return (int)Sutrika_ERR_OK;
   } else {
     CONFIG.ERRORCODE = Sutrika_ERR_FRAMEISSUE;
     CONFIG.RX.DONE = 0;
     if ( DoCAN_TransmitFlowControl (true) ) {
       CONFIG.ERRORCODE = Sutrika_ERR_INTERNALISSUE;
+      return (int)Sutrika_ERR_INTERNALISSUE;
     }
-    return 1;
+    return (int)Sutrika_ERR_FRAMEISSUE;
   }
 }
 
@@ -732,14 +733,14 @@ int Sutrika::DoCAN_FrameRX_CF (void) {
       CONFIG.RX.INDEX++;
       if (CONFIG.RX.INDEX >= CONFIG.RX.LENGTH) {
         CONFIG.RX.DONE = 1;
-        return 0;
+        return (int)Sutrika_ERR_OK;
       }
     }
-    return 0;
+    return (int)Sutrika_ERR_OK;
   } else {
     CONFIG.ERRORCODE = Sutrika_ERR_WRONGFRAMECOUNTER;
     CONFIG.RX.DONE = 0;
-    return 1;
+    return (int)Sutrika_ERR_WRONGFRAMECOUNTER;
   }
 }
 
@@ -826,48 +827,48 @@ int Sutrika::DoCAN_SetSettings (uint64_t Timeout, uint8_t Padding, uint8_t STMin
   CONFIG.SETTINGS.TIMEOUT = Timeout;
   CONFIG.SETTINGS.PADDING = Padding;
   CONFIG.SETTINGS.STMIN = STMin;
-  return 0;
+  return (int)Sutrika_ERR_OK;
 }
 
 
 /**
  * @brief Configure CAN IDs for Transport Layer Dynamically
  * @class Sutrika (Public)
- * @param TXID Transmit CAN ID
- * @param TypeTX Transmit CAN Frame Type
- * @param RXID Receive CAN ID
- * @param TypeRX Receive CAN Frame Type
+ * @param REQID Request CAN ID
+ * @param TypeREQ Request CAN Frame Type
+ * @param RESID Response CAN ID
+ * @param TypeRES Response CAN Frame Type
  * @param FUNID Functional CAN ID
  * @param TypeFUN Functional CAN Frame Type
  * @return (int) Active Low Flag
  */
-int Sutrika::DoCAN_SetCANIDs (uint32_t TXID, PCAN_MessageType TypeTX, uint32_t RXID, PCAN_MessageType TypeRX,
-    uint32_t FUNID, PCAN_MessageType TypeFUN) {
-  if ((FUNID > 0x7FF) && (TypeFUN == PCAN_STD)) { return 1; }
-  if ((TXID > 0x7FF) && (TypeTX == PCAN_STD)) { return 1; }
-  if ((RXID > 0x7FF) && (TypeRX == PCAN_STD)) { return 1; }
-  if (FUNID > 0x1FFFFFFF) { return 1; }
-  if (TXID > 0x1FFFFFFF) { return 1; }
-  if (RXID > 0x1FFFFFFF) { return 1; }
+int Sutrika::DoCAN_SetCANIDs (uint32_t REQID, PCAN_MessageType TypeREQ, uint32_t RESID, PCAN_MessageType TypeRES, 
+        uint32_t FUNID, PCAN_MessageType TypeFUN) {
+  if ((FUNID > 0x7FF) && (TypeFUN == PCAN_STD)) { return (int)Sutrika_ERR_WRONGDATA; }
+  if ((REQID > 0x7FF) && (TypeREQ == PCAN_STD)) { return (int)Sutrika_ERR_WRONGDATA; }
+  if ((RESID > 0x7FF) && (TypeRES == PCAN_STD)) { return (int)Sutrika_ERR_WRONGDATA; }
+  if (FUNID > 0x1FFFFFFF) { return (int)Sutrika_ERR_WRONGDATA; }
+  if (REQID > 0x1FFFFFFF) { return (int)Sutrika_ERR_WRONGDATA; }
+  if (RESID > 0x1FFFFFFF) { return (int)Sutrika_ERR_WRONGDATA; }
 
   CONFIG.CANID.FUN.TYPE = TypeFUN;
   CONFIG.CANID.FUN.ID = FUNID;
-  CONFIG.CANID.TX.TYPE = TypeTX;
-  CONFIG.CANID.TX.ID = TXID;
-  CONFIG.CANID.RX.TYPE = TypeRX;
-  CONFIG.CANID.RX.ID = RXID;
+  CONFIG.CANID.REQ.TYPE = TypeREQ;
+  CONFIG.CANID.REQ.ID = REQID;
+  CONFIG.CANID.RES.TYPE = TypeRES;
+  CONFIG.CANID.RES.ID = RESID;
 
-  uint32_t MAX = std::max({CONFIG.CANID.FUN.ID, CONFIG.CANID.TX.ID, CONFIG.CANID.RX.ID});
-  uint32_t MIN = std::min({CONFIG.CANID.FUN.ID, CONFIG.CANID.TX.ID, CONFIG.CANID.RX.ID});
+  uint32_t MAX = std::max({CONFIG.CANID.FUN.ID, CONFIG.CANID.REQ.ID, CONFIG.CANID.RES.ID});
+  uint32_t MIN = std::min({CONFIG.CANID.FUN.ID, CONFIG.CANID.REQ.ID, CONFIG.CANID.RES.ID});
   PCAN_MessageType Type = PCAN_STD;
-  if ((CONFIG.CANID.TX.TYPE == PCAN_EXT) || (CONFIG.CANID.RX.TYPE == PCAN_EXT) ||
+  if ((CONFIG.CANID.REQ.TYPE == PCAN_EXT) || (CONFIG.CANID.RES.TYPE == PCAN_EXT) ||
       (CONFIG.CANID.FUN.TYPE == PCAN_EXT)) {
     Type = PCAN_EXT;
   }
   if (PCAN_Filter (MIN, MAX, Type) != PCAN_ERROR_OK) {
-    return 2;
+    return (int)Sutrika_ERR_DRIVERFAILURE;
   }
-  return 0;
+  return (int)Sutrika_ERR_OK;
 }
 
 
@@ -877,9 +878,9 @@ int Sutrika::DoCAN_SetCANIDs (uint32_t TXID, PCAN_MessageType TypeTX, uint32_t R
  * @return (int) Active Low Flag
  */
 int Sutrika::DoCAN_FocusRX (void) {
-  if ( PCAN_Filter (CONFIG.CANID.RX.ID, CONFIG.CANID.RX.TYPE) != PCAN_ERROR_OK) {
-    return 1;
-  } return 0;
+  if ( PCAN_Filter (CONFIG.CANID.RES.ID, CONFIG.CANID.RES.TYPE) != PCAN_ERROR_OK) {
+    return (int)Sutrika_ERR_DRIVERFAILURE;
+  } return (int)Sutrika_ERR_OK;
 }
 
 
@@ -929,7 +930,7 @@ int Sutrika::DoCAN_Receive (bool IsFunctional) {
 
   do {
     if (PCAN_Read (MSG) == Sutrika_ERR_OK) {
-      if ((MSG.TYPE == CONFIG.CANID.RX.TYPE) && (MSG.ID == CONFIG.CANID.RX.ID) && (MSG.LEN == 8)) {
+      if ((MSG.TYPE == CONFIG.CANID.RES.TYPE) && (MSG.ID == CONFIG.CANID.RES.ID) && (MSG.LEN == 8)) {
         DoCAN_LogFrame (MSG.ID, MSG.TYPE, MSG.DATA, 'R');
         uint8_t PCI = (MSG.DATA[0] & 0xF0) >> 4;
         if ( (PCI != 0) && (PCI != 1) && (PCI != 2) ) { continue; }
@@ -957,17 +958,17 @@ int Sutrika::DoCAN_Receive (bool IsFunctional) {
         }
 
         if (Status != 0) {
-            return 1; // Processing Error
+          return Status;              // Processing Error
         }
         if (CONFIG.RX.DONE == 1) {
-            return 0; // Reception Completed
+          return (int)Sutrika_ERR_OK; // Reception Completed
         }
 
       }
     }
   } while (((MicroClock() - CONFIG.RX.TIME) < CONFIG.SETTINGS.TIMEOUT) &&
       ((MicroClock() - OverallTime) < OverallTimeout));
-  return 2; // Timed Out
+  return (int)Sutrika_ERR_TIMEOUT;    // Timed Out
 }
 
 
@@ -982,7 +983,7 @@ int Sutrika::DoCAN_Receive (bool IsFunctional) {
  */
 int Sutrika::DoCAN_Write (bool IsFunctional) {
   int Length = CONFIG.BUFFER.LENGTH;
-  if ((Length > DoCAN_MaxLength) || (Length == 0)) { return 2; }
+  if ((Length > DoCAN_MaxLength) || (Length == 0)) { return (int)Sutrika_ERR_WRONGDATA; }
   CONFIG.TX.ISFUNCTIONAL = IsFunctional;
   CONFIG.TX.LENGTH = Length;
   CONFIG.TX.FRAMES = 1;
@@ -1007,7 +1008,7 @@ int Sutrika::DoCAN_Write (bool IsFunctional) {
       } else if ((STMin <= 0xF9) && (STMin >= 0xF1)) {
         TimeBetweenFrame = (STMin & 0x0F) * 100;
       } else {
-        return 2;
+        return (int)Sutrika_ERR_WRONGDATA;
       }
 
       if (BS == 0) {
@@ -1016,7 +1017,7 @@ int Sutrika::DoCAN_Write (bool IsFunctional) {
           Status = DoCAN_FrameTX_CF();
           if (Status != 0) { return Status; }
         }
-        return 0;
+        return (int)Sutrika_ERR_OK;
       }
       else {
         int I = 0;
@@ -1031,8 +1032,8 @@ int Sutrika::DoCAN_Write (bool IsFunctional) {
     } while(CONFIG.TX.DONE != 1);
 
     if (CONFIG.TX.DONE == 1) {
-      return 0;
-    } return 1;
+      return (int)Sutrika_ERR_OK;
+    } return (int)Sutrika_ERR_TIMEOUT;
   }
 }
 
@@ -1049,11 +1050,11 @@ int Sutrika::DoCAN_Transfer (bool IsFunctional) {
   int Status = 0;
   PCAN_Reset();
   Status = DoCAN_Write (IsFunctional);
-  if (Status != 0) {
+  if (Status != Sutrika_ERR_OK) {
     return Status;
   }
   Status = DoCAN_Receive (IsFunctional);
-  if (Status != 0) {
+  if (Status != Sutrika_ERR_OK) {
     return Status;
   }
   return 0;
@@ -1075,7 +1076,7 @@ Sutrika_ERROR Sutrika::DoCAN_Start (DoCAN_ConfigureStructure Setting) {
   if ( PCAN_Initialize (CONFIG.SETTINGS.SPEED) != PCAN_ERROR_OK)
     { return Sutrika_ERR_DRIVERFAILURE; }
 
-  int Status = DoCAN_SetCANIDs (Setting.CANID.TX.ID, Setting.CANID.TX.TYPE, Setting.CANID.RX.ID, Setting.CANID.RX.TYPE, 
+  int Status = DoCAN_SetCANIDs (Setting.CANID.REQ.ID, Setting.CANID.REQ.TYPE, Setting.CANID.RES.ID, Setting.CANID.RES.TYPE, 
       Setting.CANID.FUN.ID, Setting.CANID.FUN.TYPE);
   if (Status == 1)      { return Sutrika_ERR_WRONGDATA; }
   else if (Status == 2) { return Sutrika_ERR_DRIVERFAILURE; }
@@ -1151,6 +1152,7 @@ void Sutrika::DoCAN_DataByteWrite (const uint16_t Index, const uint8_t &Data) {
 void Sutrika::DoCAN_DataByteRead (const uint16_t Index, uint8_t &Data) {
   if (Index < DoCAN_MaxLength) {
     Data = CONFIG.BUFFER.DATA[Index];
+    return;
   }
   Data = 0;
   return;

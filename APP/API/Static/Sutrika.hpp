@@ -53,6 +53,10 @@ typedef enum {
   Sutrika_ERR_DRIVERFAILURE,
   Sutrika_ERR_WRONGDATA,
   Sutrika_ERR_NOTRECEIVED,
+  Sutrika_ERR_TIMEOUT,
+  Sutrika_ERR_TEST1,
+  Sutrika_ERR_TEST2,
+  Sutrika_ERR_TEST3,
   Sutrika_ERR_MAX,
 } Sutrika_ERROR;
 
@@ -66,9 +70,9 @@ typedef struct {
     struct { uint32_t ID; PCAN_MessageType TYPE;
     } FUN;
     struct { uint32_t ID; PCAN_MessageType TYPE;
-    } TX;
+    } REQ;
     struct { uint32_t ID; PCAN_MessageType TYPE;
-    } RX;
+    } RES;
   } CANID;
   struct {
     uint64_t TIMEOUT = 0;
@@ -133,9 +137,9 @@ class Sutrika
             struct { uint32_t ID; PCAN_MessageType TYPE;
             } FUN;
             struct { uint32_t ID; PCAN_MessageType TYPE;
-            } TX;
+            } REQ;
             struct { uint32_t ID; PCAN_MessageType TYPE;
-            } RX;
+            } RES;
         } CANID;
         struct {
             uint64_t TIMEOUT = 0;
@@ -205,7 +209,7 @@ class Sutrika
     void PCAN_Show (const PCAN_Message MSG);
 
     int DoCAN_SetSettings (uint64_t Timeout, uint8_t Padding = 0, uint8_t STMin = 0);
-    int DoCAN_SetCANIDs (uint32_t TXID, PCAN_MessageType TypeTX, uint32_t RXID, PCAN_MessageType TypeRX, 
+    int DoCAN_SetCANIDs (uint32_t REQID, PCAN_MessageType TypeREQ, uint32_t RESID, PCAN_MessageType TypeRES, 
         uint32_t FUNID, PCAN_MessageType TypeFUN);
     int DoCAN_FocusRX (void);
     Sutrika_ERROR DoCAN_GetErrorCode (void);

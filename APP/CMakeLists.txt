@@ -1,19 +1,19 @@
 cmake_minimum_required(VERSION 3.15)
 project(sutrika)
+# Remove MSVC-only linker flags injected by cmake-js
+if(MINGW)
+    string(REPLACE "/DELAYLOAD:NODE.EXE" "" CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS}")
+endif()
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-if(MINGW)
-    set(CMAKE_SHARED_LINKER_FLAGS "")
-endif()
 
 if(NOT ELECTRON_EXECUTABLE)
     file(GLOB ELECTRON_EXE "${CMAKE_SOURCE_DIR}/node_modules/electron/dist/electron.exe")
     if(ELECTRON_EXE)
         set(ELECTRON_EXECUTABLE ${ELECTRON_EXE})
     else()
-        message(FATAL_ERROR "Cannot Find electron.exe")
+        message(FATAL_ERROR "Cannot find electron.exe")
     endif()
 endif()
 
@@ -66,7 +66,21 @@ set(COMMON_INCLUDES
     ${CMAKE_SOURCE_DIR}/node_modules/node-addon-api/include
 )
 
-# pcan.node
+if(NOT CMAKE_JS_INC)
+    set(NODE_INCLUDE_PATHS
+        "C:/Users/${USERNAME}/.node-gyp/${CMAKE_JS_VERSION}/include/node"
+        "C:/Program Files/nodejs/include/node"
+        "$ENV{APPDATA}/../Local/node-gyp/Cache/${CMAKE_JS_VERSION}/include/node"
+        "C:/Users/alaks/.cmake-js/electron-x64/v28.0.0/include/node"
+    )
+    find_path(NODE_INCLUDE_PATH NAMES node_api.h PATHS ${NODE_INCLUDE_PATHS} NO_DEFAULT_PATH)
+    if(NODE_INCLUDE_PATH)
+        set(CMAKE_JS_INC ${NODE_INCLUDE_PATH})
+    else()
+        message(WARNING "Could not find node_api.h - set CMAKE_JS_INC manually")
+    endif()
+endif()
+
 add_library(Sutrika_Lib STATIC
     API/Static/Sutrika.cpp
 )
@@ -74,6 +88,8 @@ target_include_directories(Sutrika_Lib PUBLIC
     ${CMAKE_SOURCE_DIR}/API/Static
     ${CMAKE_SOURCE_DIR}/API/External
 )
+
+# sutrika.node
 add_library(Sutrika_AddOn SHARED
     API/Sutrika_API.cpp
 )
@@ -95,4 +111,28 @@ target_link_libraries(Sutrika_AddOn PRIVATE
 add_dependencies(Sutrika_AddOn pcan_implib electron_implib)
 target_compile_definitions(Sutrika_AddOn PRIVATE
     NAPI_CPP_EXCEPTIONS
+)
+
+# Static MiniGW Linking
+if(MINGW)
+    target_link_options(Sutrika_AddOn PRIVATE
+        -static-libgcc
+        -static-libstdc++
+    )
+endif()
+
+
+# Adding DLLs
+add_custom_command(TARGET Sutrika_AddOn POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "${PCAN_DLL}"
+        "$<TARGET_FILE_DIR:Sutrika_AddOn>"
+    COMMENT "Copying PCANBasic.dll to Output Folder"
+)
+set(THREAD_DLL "${CMAKE_SOURCE_DIR}/API/External/libwinpthread-1.dll")
+add_custom_command(TARGET Sutrika_AddOn POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "${THREAD_DLL}"
+        "$<TARGET_FILE_DIR:Sutrika_AddOn>"
+    COMMENT "Copying libwinpthread-1.dll to Output Folder"
 )
