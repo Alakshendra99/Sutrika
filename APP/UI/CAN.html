@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html data-theme="light">
+
+<head>
+  <meta charset="UTF-8">
+  <title>SUTRIKA - MONITOR CAN BUS</title>
+
+  <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./Style/Common.css">
+  <link rel="stylesheet" href="./Style/CAN.css">
+</head>
+
+<body>
+<header>
+  
+  <nav id="TopBar" class="navbar navbar-dark border-bottom px-4 shadow fixed-top">
+
+    <div class="d-flex align-items-center gap-3">    
+      <div id="Home-Call" data-page="./Landing.html">
+        <img src="./Resources/SutrikaBlack.png" id="Logo">
+        <div id="TitleDescription">Universal UDS & CAN Tool</div>
+        <div id="TitleVersion">Version: 3.0</div>
+      </div>
+    </div>
+
+    <div class="form-check form-switch d-flex flex-column align-items-center">
+      <input class="form-check-input m-0" type="checkbox" id="LoggingToggle">
+      <label class="form-check-label fs-5 fw-semibold mt-2" for="LoggingToggle" id="LoggingText">Logger</label>
+    </div>
+
+  </nav>
+
+</header>
+<main class="container-fluid">
+
+  <div class="card section-card shadow mb-3">
+    
+    <div class="card-header bg-white section-header" data-bs-toggle="collapse" data-bs-target="#RawCANCollapse">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <h4 class="mb-1 fw-bold">⛓️ Raw CAN Monitor</h4>
+          <div class="text-muted small">Monitor Raw CAN Traffic in Real-Time</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="RawCANCollapse" class="collapse">
+      <div class="card-body">
+        
+        <div class="row g-4 align-items-end">
+          <div class="col-md-3">
+            <label class="control-label">Traffic Mode</label>
+            <select class="form-select" id="RawCANMode">
+              <option value="single">Single CAN ID  </option>
+              <option value="range" >Range of CAN ID</option>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <label class="control-label">CAN ID</label>
+            <input type="text" class="form-control RawSingleCAN" placeholder="0x100">
+          </div>
+          <div class="col-md-2">
+            <label class="control-label">Start CAN ID</label>
+            <input type="text" class="form-control RawRangeCAN" placeholder="0x100">
+          </div>
+          <div class="col-md-2">
+            <label class="control-label">End CAN ID</label>
+            <input type="text" class="form-control RawRangeCAN" placeholder="0x7FF">
+          </div>
+          <div class="col-md-3 d-grid">
+            <button class="btn btn-lg btn-outline-dark">Start Watching</button>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mt-4 mb-3">
+          <div>
+            <div class="fw-semibold">Rendering Mode</div>
+            <div class="text-muted small">Switch Between Time Stamp Rendering & Card Rendering</div>
+          </div>
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="RawRenderToggle">
+            <label class="form-check-label ms-2" for="RawRenderToggle">Time Stamp Mode / Card Mode</label>
+          </div>
+        </div>
+
+        <!-- CANVAS -->
+        <div class="monitor-canvas mt-3" id="RawCANCanvas">
+          <div class="text-secondary">Waiting for CAN Monitoring ...</div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+
+  <div class="card section-card shadow mb-3">
+    
+    <div class="card-header bg-white section-header" data-bs-toggle="collapse" data-bs-target="#DBCCollapse">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <h4 class="mb-1 fw-bold">📅 DBC Watcher</h4>
+          <div class="text-muted small">DBC Message And Signal Watcher</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="DBCCollapse" class="collapse">
+      <div class="card-body">
+
+        <div class="row g-4 align-items-end">
+          <div class="col-md-5">
+            <label class="control-label">DBC File</label>
+            <input type="file" class="form-control" accept=".dbc">
+          </div>
+          <div class="col-md-4">
+            <label class="control-label">Message ID</label>
+            <select class="form-select">
+              <option>Select DBC Message</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label class="control-label">Signals</label>
+            <select class="form-select">
+              <option>All Signals</option>
+            </select>
+          </div>
+        </div>
+        <div class="mt-4 d-grid">
+          <button class="btn btn-outline-dark">Start Watching</button>
+        </div>
+
+        <div class="monitor-canvas mt-4" id="DBCCanvas">
+  
+          <div class="dbc-message">
+            <div class="fw-bold">ENGINE_STATUS - 0x101 - 12:41:08.224</div>
+            <div class="dbc-signal">├─ RPM : 812</div>
+            <div class="dbc-signal">├─ TEMP : 76 °C</div>
+            <div class="dbc-signal">├─ SPEED : 42 km/h</div>
+            <div class="dbc-signal">└─ RAW : [22 11 88 44 00 00 00 00]</div>
+          </div>
+
+          <div class="dbc-message">
+            <div class="fw-bold">BRAKE_STATUS - 0x221 - 12:41:08.487</div>
+            <div class="dbc-signal">├─ BRAKE_SWITCH : ON</div>
+            <div class="dbc-signal">├─ ABS_ACTIVE : OFF</div>
+            <div class="dbc-signal">└─ RAW : [00 01 00 00 00 00 00 00]</div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="./Scripts/Common.js"></script>
+<script src="./Scripts/CAN.js"></script>
+
+</body>
+</html>

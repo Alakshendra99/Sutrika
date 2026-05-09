@@ -24,6 +24,10 @@ body {
   height: 100vh;
 }
 
+main {
+  padding-top: 30vh;
+}
+
 #TopBar {
   height: 25vh;
   background: var(--bg-navbar);
@@ -58,4 +62,15 @@ body {
   font-size: 1rem;
   font-weight: 600;
   color: var(--text-opposite);
+}
+
+
+#Home-Call {
+  cursor: pointer;
+  transition: all 0.25s ease;
+  border-radius: 18px;
+}
+
+#Home-Call:hover {
+  transform: translateY(-6px) scale(1.01);
 }

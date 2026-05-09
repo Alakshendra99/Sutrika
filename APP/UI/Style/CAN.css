@@ -1,0 +1,64 @@
+.section-card {
+  border: none;
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.section-header {
+  cursor: pointer;
+  user-select: none;
+  transition: 0.2s;
+}
+
+.section-header:hover {
+  background-color: rgba(0,0,0,0.03);
+}
+
+.monitor-canvas {
+  height: 420px;
+  overflow-y: auto;
+  border-radius: 12px;
+  background-color: #0f172a;
+  color: #e5e7eb;
+  padding: 16px;
+  font-family: monospace;
+  font-size: 14px;
+}
+
+.can-line {
+  padding: 6px 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  white-space: nowrap;
+}
+
+
+
+
+.dbc-message {
+  padding: 12px;
+  border-radius: 10px;
+  background-color: rgba(255,255,255,0.04);
+  margin-bottom: 12px;
+}
+
+.dbc-signal {
+  padding-left: 24px;
+  color: #d1d5db;
+  margin-top: 4px;
+}
+
+.control-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #6b7280;
+  margin-bottom: 6px;
+}
+
+.badge-mode {
+  font-size: 12px;
+}
+
+.form-switch .form-check-input {
+  width: 3em;
+  height: 1.5em;
+}

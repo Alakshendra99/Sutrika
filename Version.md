@@ -38,3 +38,7 @@
 - Made Sutrika Link Statically
 - Tested Sutrika Engine
 - Made Primitive UI
+
+#### v3.0:5
+- Dashboard UI Completed
+- Suspended Light/Dark Theme
