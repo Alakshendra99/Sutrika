@@ -1,9 +1,9 @@
 */node_modules
-*/build
 */Logs
 *.layout
 *.depend
-.vscode
-.Misc
+*/.Misc
 */obj
 */Release
+
+.vscode

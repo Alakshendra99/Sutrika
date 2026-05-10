@@ -1,0 +1,2 @@
+C:\PROGRA~1\CODEBL~1\MinGW\bin\ar.exe qc libSutrika_Lib.a CMakeFiles/Sutrika_Lib.dir/API/Static/Sutrika.cpp.obj
+C:\PROGRA~1\CODEBL~1\MinGW\bin\ranlib.exe libSutrika_Lib.a

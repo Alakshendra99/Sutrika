@@ -71,7 +71,6 @@ if(NOT CMAKE_JS_INC)
         "C:/Users/${USERNAME}/.node-gyp/${CMAKE_JS_VERSION}/include/node"
         "C:/Program Files/nodejs/include/node"
         "$ENV{APPDATA}/../Local/node-gyp/Cache/${CMAKE_JS_VERSION}/include/node"
-        "C:/Users/alaks/.cmake-js/electron-x64/v28.0.0/include/node"
     )
     find_path(NODE_INCLUDE_PATH NAMES node_api.h PATHS ${NODE_INCLUDE_PATHS} NO_DEFAULT_PATH)
     if(NODE_INCLUDE_PATH)

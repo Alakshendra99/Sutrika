@@ -15,26 +15,43 @@
 }
 
 .monitor-canvas {
-  height: 420px;
+  height: 500px;
   overflow-y: auto;
+  overflow-x: hidden;
   border-radius: 12px;
-  background-color: #0f172a;
-  color: #e5e7eb;
+  background-color: #091413;
+  color: #E5E7EB;
   padding: 16px;
   font-family: monospace;
   font-size: 14px;
 }
 
-.can-line {
-  padding: 6px 10px;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-  white-space: nowrap;
+#DBCSignalList {
+  max-height: 40vh;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 
 
 
-.dbc-message {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.DBCMessage {
   padding: 12px;
   border-radius: 10px;
   background-color: rgba(255,255,255,0.04);

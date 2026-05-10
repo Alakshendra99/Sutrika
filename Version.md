@@ -42,3 +42,8 @@
 #### v3.0:5
 - Dashboard UI Completed
 - Suspended Light/Dark Theme
+
+#### v3.0:5
+- Made Raw CAN Module Working
+- Made DBC Watching Module Working
+- Pre-Load Have a Cleanup

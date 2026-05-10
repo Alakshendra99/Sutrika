@@ -3,6 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content=" default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:;">
   <title>SUTRIKA - MONITOR CAN BUS</title>
 
   <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
@@ -13,13 +14,13 @@
 <body>
 <header>
   
-  <nav id="TopBar" class="navbar navbar-dark border-bottom px-4 shadow fixed-top">
+  <nav id="TopBar" class="navbar navbar-dark border-bottom px-4 shadow">
 
     <div class="d-flex align-items-center gap-3">    
       <div id="Home-Call" data-page="./Landing.html">
         <img src="./Resources/SutrikaBlack.png" id="Logo">
         <div id="TitleDescription">Universal UDS & CAN Tool</div>
-        <div id="TitleVersion">Version: 3.0</div>
+        <div id="TitleVersion">Version: 3.14</div>
       </div>
     </div>
 
@@ -56,19 +57,19 @@
             </select>
           </div>
           <div class="col-md-2">
-            <label class="control-label">CAN ID</label>
-            <input type="text" class="form-control RawSingleCAN" placeholder="0x100">
+            <label class="control-label" for="RawSingleCAN">CAN ID</label>
+            <input type="text" class="form-control RawSingleCAN" id="RawSingleCAN" placeholder="0x100">
           </div>
           <div class="col-md-2">
-            <label class="control-label">Start CAN ID</label>
-            <input type="text" class="form-control RawRangeCAN" placeholder="0x100">
+            <label class="control-label" for="RawRangeStartCAN">Start CAN ID</label>
+            <input type="text" class="form-control RawRangeCAN" id="RawRangeStartCAN" placeholder="0x100">
           </div>
           <div class="col-md-2">
-            <label class="control-label">End CAN ID</label>
-            <input type="text" class="form-control RawRangeCAN" placeholder="0x7FF">
+            <label class="control-label" for="RawRangeEndCAN">End CAN ID</label>
+            <input type="text" class="form-control RawRangeCAN" id="RawRangeEndCAN"   placeholder="0x7FF">
           </div>
           <div class="col-md-3 d-grid">
-            <button class="btn btn-lg btn-outline-dark">Start Watching</button>
+            <button class="btn btn-lg btn-outline-dark" id="StartRawCANButton">Start Watching</button>
           </div>
         </div>
 
@@ -79,11 +80,12 @@
           </div>
           <div class="form-check form-switch">
             <input class="form-check-input" type="checkbox" id="RawRenderToggle">
-            <label class="form-check-label ms-2" for="RawRenderToggle">Time Stamp Mode / Card Mode</label>
+            <label class="form-check-label ms-2" for="RawRenderToggle">Card Mode / Time Stamp Mode</label>
           </div>
         </div>
 
-        <!-- CANVAS -->
+        <div id="RawCANError" class="text-danger fw-semibold mt-3"></div>
+
         <div class="monitor-canvas mt-3" id="RawCANCanvas">
           <div class="text-secondary">Waiting for CAN Monitoring ...</div>
         </div>
@@ -109,43 +111,48 @@
       <div class="card-body">
 
         <div class="row g-4 align-items-end">
+
           <div class="col-md-5">
             <label class="control-label">DBC File</label>
-            <input type="file" class="form-control" accept=".dbc">
+            <input type="file" class="form-control" accept=".dbc" id="DBCInputFil">
           </div>
           <div class="col-md-4">
             <label class="control-label">Message ID</label>
-            <select class="form-select">
+            <select class="form-select" id="DBCMessageList">
               <option>Select DBC Message</option>
             </select>
           </div>
+
           <div class="col-md-3">
             <label class="control-label">Signals</label>
-            <select class="form-select">
-              <option>All Signals</option>
-            </select>
+            <div class="dropdown w-100">
+              <button class="btn btn-outline-dark dropdown-toggle w-100 text-start" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="DBCSignalListButton">Select Signals</button>
+              <ul class="dropdown-menu w-100 p-3" id="DBCSignalList">
+
+              </ul>
+            </div>
           </div>
+
         </div>
+        
         <div class="mt-4 d-grid">
-          <button class="btn btn-outline-dark">Start Watching</button>
+          <button class="btn btn-outline-dark" id="DBCStartButton">Start Watching</button>
         </div>
+
+        <div id="DBCCANError" class="text-danger fw-semibold mt-3"></div>
 
         <div class="monitor-canvas mt-4" id="DBCCanvas">
-  
-          <div class="dbc-message">
-            <div class="fw-bold">ENGINE_STATUS - 0x101 - 12:41:08.224</div>
-            <div class="dbc-signal">├─ RPM : 812</div>
-            <div class="dbc-signal">├─ TEMP : 76 °C</div>
-            <div class="dbc-signal">├─ SPEED : 42 km/h</div>
-            <div class="dbc-signal">└─ RAW : [22 11 88 44 00 00 00 00]</div>
-          </div>
+          <div class="text-secondary">Waiting For CAN Traffic ...</div>
 
-          <div class="dbc-message">
-            <div class="fw-bold">BRAKE_STATUS - 0x221 - 12:41:08.487</div>
-            <div class="dbc-signal">├─ BRAKE_SWITCH : ON</div>
-            <div class="dbc-signal">├─ ABS_ACTIVE : OFF</div>
-            <div class="dbc-signal">└─ RAW : [00 01 00 00 00 00 00 00]</div>
-          </div>
+
+
+<!-- <div class="DBCMessage">
+  <div class="fw-bold"><span class="fs-6 text-danger">ENGINE_STATUS</span> - <span class="fs-5 text-warning">101</span> : <span class="mt-1 text-secondary">12:41:08.224</span></div>
+  <div class="DBCSignal"><span class="text-secondary">├─</span> RPM : 812</div>
+  <div class="DBCSignal"><span class="text-secondary">├─</span> TEMP : 76 °C</div>
+  <div class="DBCSignal"><span class="text-secondary">├─</span> SPEED : 42 km/h</div>
+  <div class="DBCSignal"><span class="text-secondary">└─</span> RAW : [22 11 88 44 00 00 00 00]</div>
+</div> -->
 
         </div>
 
@@ -157,9 +164,8 @@
 </main>
 
 <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="./Scripts/Common.js"></script>
-<script src="./Scripts/CAN.js"></script>
+<script src="./Scripts/MonitorCAN.js"></script>
 
 </body>
 </html>

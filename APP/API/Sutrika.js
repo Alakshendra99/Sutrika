@@ -1,6 +1,4 @@
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
-const { Sutrika: NativeSutrika } = require('../build/sutrika.node');
+const { Sutrika : NativeSutrika } = require("../build/sutrika.node");
 
 class Sutrika {
   constructor() {
@@ -51,4 +49,4 @@ class Sutrika {
   }
 }
 
-export default Sutrika;
+module.exports = Sutrika;

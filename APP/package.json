@@ -10,7 +10,7 @@
   "type": "commonjs",
   "main": "Main.js",
   "scripts": {
-    "build:addon": "cmake-js compile --runtime=electron --runtime-version=28.0.0 -G \"MinGW Makefiles\"",
+    "build:addon": "cmake-js compile --runtime=electron --runtime-version=41.5.0 -G \"MinGW Makefiles\"",
     "start": "electron ."
   },
   "devDependencies": {
@@ -18,7 +18,9 @@
     "electron": "^41.5.0"
   },
   "dependencies": {
+    "@montra-connect/dbc-parser": "^0.0.4",
     "bootstrap": "^5.3.8",
+    "dbc-can": "^1.6.0",
     "node-addon-api": "^8.7.0"
   }
 }

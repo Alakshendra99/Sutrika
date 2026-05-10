@@ -1,3 +1,7 @@
+main {
+  padding-top: 30vh;
+}
+
 .feature-card {
   cursor: pointer;
   transition: all 0.25s ease;
