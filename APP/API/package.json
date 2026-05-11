@@ -1,0 +1,25 @@
+{
+  "name": "sutrika-builder",
+  "version": "1.0.0",
+  "description": "Sutrika Runtime C++ Bridge",
+  "keywords": [
+    "Sutrika"
+  ],
+  "license": "ISC",
+  "author": "Alakshendra Singh",
+  "type": "commonjs",
+  "main": "Sutrika.js",
+  "scripts": {
+    "configure": "node-gyp configure",
+    "build": "node-gyp build",
+    "rebuild": "node-gyp rebuild",
+    "clean": "node-gyp clean",
+    "full": "node-gyp clean && node-gyp configure && node-gyp build"
+  },
+  "dependencies": {
+    "node-addon-api": "^8.7.0"
+  },
+  "devDependencies": {
+    "node-gyp": "^12.3.0"
+  }
+}

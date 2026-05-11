@@ -1,5 +1,5 @@
 const SutrikaStatus = {
-  VERSION: "Version: 3.05",
+  VERSION: "Version: 3.06",
   CAN_SPEED : 500,
   LOG_STATUS : false,
 };

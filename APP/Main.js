@@ -9,7 +9,7 @@ function CreateWindow() {
     height: 700,
     minWidth: 1400,
     minHeight: 700,
-    backgroundColor: '#111827',
+    backgroundColor: '#EEEEEE',
     autoHideMenuBar: true,
     webPreferences: {
       preload: Path.join(__dirname, 'Context', 'Pre-Load.js'),
@@ -17,6 +17,7 @@ function CreateWindow() {
       nodeIntegration: true
     }
   });
+  Window.maximize();
   Window.loadFile (Path.join(__dirname, 'UI', 'Landing.html'));
   Window.webContents.openDevTools();
 }

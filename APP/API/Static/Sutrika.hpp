@@ -25,27 +25,27 @@
  * @brief Logging Type
  * @enum
  */
-typedef enum LOG_TYPE {
+enum LOG_TYPE {
   LOG_TEXT = 0,
   LOG_UDS,
   LOG_CAN,
   LOG_MAX,
-} LOG_TYPE;
+};
 
 /**
  * @brief PCAN CAN Message Type
  * @enum
  */
-typedef enum : uint8_t {
+enum PCAN_MessageType : uint8_t {
   PCAN_STD = static_cast<uint8_t>(PCAN_MESSAGE_STANDARD),
   PCAN_EXT = static_cast<uint8_t>(PCAN_MESSAGE_EXTENDED),
-} PCAN_MessageType;
+};
 
 /**
  * @brief DoCAN Error Codes
  * @enum
  */
-typedef enum {
+enum Sutrika_ERROR {
   Sutrika_ERR_OK = 0,
   Sutrika_ERR_INTERNALISSUE,
   Sutrika_ERR_FRAMEISSUE,
@@ -58,14 +58,14 @@ typedef enum {
   Sutrika_ERR_TEST2,
   Sutrika_ERR_TEST3,
   Sutrika_ERR_MAX,
-} Sutrika_ERROR;
+};
 
 
 /**
  * @brief DoCAN Configuration Structure
  * @struct
  */
-typedef struct {
+struct DoCAN_ConfigureStructure {
   struct {
     struct { uint32_t ID; PCAN_MessageType TYPE;
     } FUN;
@@ -80,18 +80,18 @@ typedef struct {
     uint8_t STMIN = 0;
     uint16_t SPEED = 500;
   } SETTINGS;
-} DoCAN_ConfigureStructure;
+};
 
 /**
  * @brief PCAN CAN Message Type
  * @struct
  */
-typedef struct {
+struct PCAN_Message {
   uint32_t          ID;
   PCAN_MessageType  TYPE;
   uint8_t           LEN;
   uint8_t           DATA[8];
-} PCAN_Message;
+};
 
 
 /**

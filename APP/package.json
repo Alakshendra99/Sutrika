@@ -1,26 +1,23 @@
 {
   "name": "sutrika",
-  "version": "1.0.0",
+  "version": "3.14.0",
   "description": "Sutrika",
-  "keywords": [
-    "Sutrika"
-  ],
+  "keywords": ["Sutrika"],
   "license": "ISC",
   "author": "Alakshendra Singh",
   "type": "commonjs",
   "main": "Main.js",
   "scripts": {
-    "build:addon": "cmake-js compile --runtime=electron --runtime-version=41.5.0 -G \"MinGW Makefiles\"",
-    "start": "electron ."
+    "build:addon": "cd APP/API && npm run full",
+    "start": "electron .",
+    "package": "electron-packager . Sutrika --platform=win32 --arch=x64 --overwrite --out=Portable --asar=false"
   },
   "devDependencies": {
-    "cmake-js": "^8.0.0",
-    "electron": "^41.5.0"
+    "electron": "^41.5.0",
+    "electron-packager": "^17.1.2"
   },
   "dependencies": {
-    "@montra-connect/dbc-parser": "^0.0.4",
     "bootstrap": "^5.3.8",
-    "dbc-can": "^1.6.0",
-    "node-addon-api": "^8.7.0"
+    "dbc-can": "^1.6.0"
   }
 }

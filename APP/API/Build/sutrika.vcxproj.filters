@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="..">
+      <UniqueIdentifier>{13ED4249-1F9C-5F0F-2651-29A73F3A7059}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..">
+      <UniqueIdentifier>{13ED4249-1F9C-5F0F-2651-29A73F3A7059}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Static">
+      <UniqueIdentifier>{CAAFE59C-CA11-2E25-5774-5B7A3E4358C2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D:">
+      <UniqueIdentifier>{86BBDC71-6ACD-FBEF-2BDD-D703B16582D3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D:\Workzone">
+      <UniqueIdentifier>{02BF5C84-847F-7D13-F2C9-92CDDC9FF3B7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D:\Workzone\Sutrika">
+      <UniqueIdentifier>{4DF74785-4438-8ED6-DDF2-B7C2190AF7F1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D:\Workzone\Sutrika\APP">
+      <UniqueIdentifier>{A7618242-90F8-08FF-8229-0AFAE5DC7989}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D:\Workzone\Sutrika\APP\API">
+      <UniqueIdentifier>{D4898A4C-508C-FB39-0B4E-25494D51D7B5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D:\Workzone\Sutrika\APP\API\node_modules">
+      <UniqueIdentifier>{126A39EA-1D28-5689-C126-0DA0AB5837A0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D:\Workzone\Sutrika\APP\API\node_modules\node-gyp">
+      <UniqueIdentifier>{49558BB4-6D34-CA91-A65D-85A65792DC11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D:\Workzone\Sutrika\APP\API\node_modules\node-gyp\src">
+      <UniqueIdentifier>{F1003AD6-4B6D-45DF-3F56-5CAC869BF55E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..">
+      <UniqueIdentifier>{13ED4249-1F9C-5F0F-2651-29A73F3A7059}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Sutrika_API.cpp">
+      <Filter>..</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Static\Sutrika.cpp">
+      <Filter>..\Static</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Workzone\Sutrika\APP\API\node_modules\node-gyp\src\win_delay_load_hook.cc">
+      <Filter>D:\Workzone\Sutrika\APP\API\node_modules\node-gyp\src</Filter>
+    </ClCompile>
+    <None Include="..\binding.gyp">
+      <Filter>..</Filter>
+    </None>
+  </ItemGroup>
+</Project>

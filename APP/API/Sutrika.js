@@ -1,4 +1,4 @@
-const { Sutrika : NativeSutrika } = require("../build/sutrika.node");
+const { Sutrika : NativeSutrika } = require('./Build/Release/sutrika.node');
 
 class Sutrika {
   constructor() {

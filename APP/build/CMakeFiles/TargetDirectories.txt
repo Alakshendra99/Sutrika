@@ -1,6 +1,0 @@
-D:/Workzone/Sutrika/APP/build/CMakeFiles/electron_implib.dir
-D:/Workzone/Sutrika/APP/build/CMakeFiles/pcan_implib.dir
-D:/Workzone/Sutrika/APP/build/CMakeFiles/Sutrika_Lib.dir
-D:/Workzone/Sutrika/APP/build/CMakeFiles/Sutrika_AddOn.dir
-D:/Workzone/Sutrika/APP/build/CMakeFiles/edit_cache.dir
-D:/Workzone/Sutrika/APP/build/CMakeFiles/rebuild_cache.dir

@@ -47,3 +47,13 @@
 - Made Raw CAN Module Working
 - Made DBC Watching Module Working
 - Pre-Load Have a Cleanup
+
+#### v3.0:6
+- Made Sutrika Microsoft Visual Studio Build Complient
+- Build Sutrika using Microsoft Visual Studio Build Tools
+- Isolated Build Enviroment From Main App and Used GYP
+- Added New Sutrika Tested and Modified Sutrika.js Path
+- Tested Developer Environment for Electron App and is Working
+- Tested The Export in Portable Form
+- Maximized From Start Added
+- CMake Removed
