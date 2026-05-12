@@ -34,10 +34,9 @@ const Status = {
 };
 
 
-document.querySelectorAll("#Home-Call")
-  .forEach(card => { 
-    Sutrika.CAN.Uninitialize();
-    card.addEventListener("click", () => {
+document.querySelectorAll("#Home-Call").forEach(card => { 
+  Sutrika.CAN.Uninitialize();
+  card.addEventListener("click", () => {
     const page = card.dataset.page;
     window.location.href = page;
   });
@@ -162,12 +161,12 @@ async function StartCANReadLoop () {
         }
       }
 
-      if (Config.LOG_STATUS) {
+      if (Config.LOG.STATUS) {
         const CANID = Frame.CANID.toString(16).toUpperCase().padStart(3, '0');
         const Type = (Frame.TYPE == 0) ? "STD" : "EXT";
         const Data = Array.from(Frame.DATA).slice(0, Frame.LENGTH)
             .map(Byte => Byte.toString(16).toUpperCase().padStart(2, '0')).join(' ');
-        const Message = `${CANID}  ${Type}  ${Data}`;
+        const Message = `${CANID}  ${Type}  Rx  ${Data}`;
         Sutrika.Log.Line(2, Message);
       }
     }
@@ -213,14 +212,14 @@ RawCANMode.addEventListener("change", UpdateRawCANWorkMode);
 LoggingToggle.addEventListener("change", () => {
   if (LoggingToggle.checked) {
     Sutrika.Log.State(true, 2);
-    Config.LOG_STATUS = true;
+    Config.LOG.STATUS = true;
   } else {
     Sutrika.Log.State(false, 2);
-    Config.LOG_STATUS = false;
+    Config.LOG.STATUS = false;
   }
 });
-LoggingToggle.checked = Config.LOG_STATUS;
-Sutrika.Log.State(Config.LOG_STATUS, 2);
+LoggingToggle.checked = Config.LOG.STATUS;
+Sutrika.Log.State(Config.LOG.STATUS, 2);
 
 
 StartRawCANButton.addEventListener ( "click", () => {
@@ -273,7 +272,7 @@ StartRawCANButton.addEventListener ( "click", () => {
     }
 
     if (!Status.DBCCAN.IsRunning) {
-      const Status_CANInit = Sutrika.CAN.Initialize(Config.CAN_SPEED); 
+      const Status_CANInit = Sutrika.CAN.Initialize(Config.CAN.SPEED); 
       if (Status_CANInit != 0) {
         RawCANError.innerText = "CAN Device Issue!";
         return false;
@@ -663,7 +662,7 @@ DBCStartButton.addEventListener("click", () => {
   } // Start DBC Watching
   
   if (!Status.RawCAN.IsRunning) {
-    const Status_CANInit = Sutrika.CAN.Initialize(Config.CAN_SPEED); 
+    const Status_CANInit = Sutrika.CAN.Initialize(Config.CAN.SPEED); 
     if (Status_CANInit != 0) {
       DBCCANError.innerText = "CAN Device Issue!";
       return false;

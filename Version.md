@@ -57,3 +57,6 @@
 - Tested The Export in Portable Form
 - Maximized From Start Added
 - CMake Removed
+
+#### v3.0:7
+- Added Configuration Page

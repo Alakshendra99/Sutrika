@@ -1,0 +1,24 @@
+{
+  "CAN" : {
+    "SPEED" : "500"
+  },
+  "DoCAN" : {
+    "CANID" : {
+      "REQUEST" : {
+        "TYPE" : "STD",
+        "ID" : "785"
+      },
+      "RESPONSE" : {
+        "TYPE" : "STD",
+        "ID" : "78D"
+      },
+      "FUNCTIONAL" : {
+        "TYPE" : "STD",
+        "ID" : "7DF"
+      }
+    },
+    "TIMEOUT" : 5000000,
+    "PADDING" : "00",
+    "STMIN" : "00"
+  }
+}

@@ -1,7 +1,11 @@
-const SutrikaStatus = {
+const Configurations = {
   VERSION: "Version: 3.06",
-  CAN_SPEED : 500,
-  LOG_STATUS : false,
+  CAN : {
+    SPEED : 500,
+  },
+  LOG : {
+    STATUS : false,
+  }
 };
 
-module.exports = SutrikaStatus;
+module.exports = Configurations;
