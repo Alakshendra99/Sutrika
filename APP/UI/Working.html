@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html data-theme="light">
+
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content=" default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:;">
   <title>SUTRIKA</title>
 
   <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="./Style/Common.css">
-  <link rel="stylesheet" href="./Style/Landing.css">
 </head>
 
 <body>
@@ -15,31 +16,31 @@
   <nav id="TopBar" class="navbar navbar-dark border-bottom px-4 shadow">
 
     <div class="d-flex align-items-center gap-3">    
-      <div>
+      <div id="Home-Call" data-page="./Landing.html">
         <img src="./Resources/SutrikaBlack.png" id="Logo">
         <div id="TitleDescription">Universal UDS & CAN Tool</div>
-        <div id="TitleVersion">Version: 3.0</div>
+        <div id="TitleVersion">Version: 3.14</div>
       </div>
     </div>
 
     <div class="form-check form-switch d-flex flex-column align-items-center">
       <input class="form-check-input m-0" type="checkbox" id="LoggingToggle">
-      <label class="form-check-label fs-5 fw-semibold mt-2" for="LoggingToggle"id="LoggingText">Logger</label>
+      <label class="form-check-label fs-5 fw-semibold mt-2" for="LoggingToggle" id="LoggingText">Logger</label>
     </div>
 
   </nav>
 
 </header>
+
+
 <main>
-
-  
-
+  <div class="Working-Banner">WORK IN PROGRESS !</div>
+  <div class="Working-Wait">Wait For Next Version</div>
 </main>
 
-<footer id="Footer">2026 ©, Alakshendra Singh</footer>
-
 <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="./Scripts/Landing.js"></script>
+<script src="./Scripts/Common.js"></script>
+<script src="./Scripts/Working.js"></script>
 
 </body>
 </html>

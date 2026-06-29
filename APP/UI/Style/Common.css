@@ -1,19 +1,10 @@
-:root[data-theme="dark"] {
-  --bg-main: #373A40;
-  --bg-navbar: #37353E;
-  --bg-footer: #A2CB8B;
-  --text-main: #EEEEEE;
-  --text-secondary: #76ABAE;
-}
-
-:root[data-theme="light"] {
+:root {
   --bg-main: #FFFFFF;
   --bg-navbar: #ACCFA3;
   --bg-footer: #393E46;
   --text-main: #080808;
-  --text-secondary: #76ABAE;
-  --text-opposite: #EEEEEE;
 }
+
 /* ************************************************** */
 
 body {
@@ -73,4 +64,25 @@ main {
 
 #Home-Call:hover {
   transform: translateY(-6px) scale(1.01);
+}
+
+#LoggingToggle {
+  transform: scale(1.5);
+  cursor: pointer;
+}
+
+
+
+
+.Working-Banner {
+  padding-left: 5vw;
+  font-weight: 700;
+  font-size: 2rem;
+
+}
+
+.Working-Wait {
+  padding-left: 5vw;
+  font-weight: 500;
+  font-size: 1.25rem;
 }

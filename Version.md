@@ -60,3 +60,13 @@
 
 #### v3.0:7
 - Added Configuration Page
+
+#### v3.0:8
+- Fixed CSS Variables
+
+#### v3.0:9
+- Re-Structured File System
+- Added Work In Progress Page
+- Added Proper CSS For Monitoring CAN
+- Added Send CAN UI and Backend For Periodic Send
+- Added Send CAN UI and Backend For Manual Key Send

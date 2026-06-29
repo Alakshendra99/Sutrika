@@ -11,7 +11,7 @@ document.querySelectorAll("#Home-Call").forEach(card => {
 const fs=require("fs");
 const path=require("path");
 
-const ConfigPath=path.join(__dirname,"../Config.json");
+const ConfigPath=path.join(__dirname,"../Library/Settings.json");
 
 const Form=document.getElementById("ConfigForm");
 

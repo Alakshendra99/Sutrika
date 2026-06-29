@@ -1,5 +1,5 @@
-const Config = require("./Configuration.js");
+const Constants = require("./Constants.js");
 const Sutrika = require("./Sutrika.js");
 
-window.Config = Config;
+window.Constants = Constants;
 window.Sutrika = Sutrika;

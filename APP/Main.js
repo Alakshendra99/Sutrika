@@ -18,7 +18,7 @@ function CreateWindow() {
     }
   });
   Window.maximize();
-  Window.loadFile (Path.join(__dirname, 'UI', 'Landing.html'));
+  Window.loadFile (Path.join(__dirname, 'UI', 'CAN.html'));
   Window.webContents.openDevTools();
 }
 

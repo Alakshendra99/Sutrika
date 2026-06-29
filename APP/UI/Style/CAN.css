@@ -1,20 +1,56 @@
-.section-card {
+:root {
+  --Raw-Time-Time       : #F0E76F;
+  --Raw-Time-Type       : #A5CF83;
+  --Raw-Time-Data       : #FFF0D9;
+  --Raw-Time-CANID      : #FF6060;
+
+  --Raw-Card-Time       : #F0E76F;
+  --Raw-Card-Type       : #A5CF83;
+  --Raw-Card-Data       : #FFF0D9;
+  --Raw-Card-CANID      : #FF6060;
+
+  --DBC-Card-Structure  : #7F7F7F;
+  --DBC-Card-Name       : #ECB65F;
+  --DBC-Card-CANID      : #FF6060;
+  --DBC-Card-Type       : #A5CF83;
+  --DBC-Card-Time       : #F0E76F;
+  --DBC-Card-Signal     : #A5E9DD;
+  --DBC-Card-Value      : #FFF0D9;
+  --DBC-Card-Raw        : #6FBEB2;
+  --DBC-Card-Data       : #FFF0D9;
+}
+
+/* ************************************************** */
+
+main {
+  padding-right: 3.5vw !important;
+  padding-left: 3.5vw !important;
+}
+
+.Section-Card {
   border: none;
   border-radius: 18px;
   overflow: hidden;
 }
 
-.section-header {
+.Section-Header {
   cursor: pointer;
   user-select: none;
   transition: 0.2s;
 }
 
-.section-header:hover {
+.Section-Header:hover {
   background-color: rgba(0,0,0,0.03);
 }
 
-.monitor-canvas {
+.Form-Label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #6b7280;
+  margin-bottom: 6px;
+}
+
+.Monitor-Canvas {
   height: 500px;
   overflow-y: auto;
   overflow-x: hidden;
@@ -26,37 +62,255 @@
   font-size: 14px;
 }
 
+/* ************************************************** */
+
+.RawCAN-TimeStamp-Box {
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.RawCAN-TimeStamp-Time {
+  color: var(--Raw-Time-Time);
+  font-size: 1rem;
+}
+
+.RawCAN-TimeStamp-Type {
+  color: var(--Raw-Time-Type);
+  font-size: 0.85rem;
+}
+
+.RawCAN-TimeStamp-Data {
+  color: var(--Raw-Time-Data);
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.RawCAN-TimeStamp-CANID {
+  color: var(--Raw-Time-CANID);
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.RawCAN-Card-Box {
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.RawCAN-Card-Time {
+  color: var(--Raw-Card-Time);
+  font-size: 0.85rem;
+}
+
+.RawCAN-Card-Type {
+  color: var(--Raw-Card-Type);
+  font-size: 0.85rem;
+}
+
+.RawCAN-Card-Data {
+  color: var(--Raw-Card-Data);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.RawCAN-Card-CANID {
+  color: var(--Raw-Card-CANID);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* ************************************************** */
+
+#DBCMessageList {
+  font-family: 'Courier New', Courier, monospace;
+}
+
 #DBCSignalList {
+  font-family: 'Courier New', Courier, monospace;
   max-height: 40vh;
   overflow-y: auto;
   overflow-x: hidden;
 }
 
-.DBCMessage {
+.DBC-Card {
+  color: var(--DBC-Card-Structure);
   padding: 12px;
   border-radius: 10px;
   background-color: rgba(255,255,255,0.04);
   margin-bottom: 12px;
 }
 
-.dbc-signal {
-  padding-left: 24px;
-  color: #d1d5db;
-  margin-top: 4px;
+.DBC-Card-Message {
+  font-family: 'Courier New', Courier, monospace;
 }
 
-.control-label {
-  font-size: 13px;
+.DBC-Card-Signal {
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.DBC-Card-Name {
+  color: var(--DBC-Card-Name);
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.DBC-Card-CANID {
+  color: var(--DBC-Card-CANID);
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.DBC-Card-Type {
+  color: var(--DBC-Card-Type);
+  font-size: 0.85rem;
+  font-weight: 300;
+}
+
+.DBC-Card-Time {
+  color: var(--DBC-Card-Time);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.DBC-Card-Branch {
+  color: var(--DBC-Card-Structure);
+  font-size: 1rem;
+}
+
+.DBC-Card-SignalName {
+  color: var(--DBC-Card-Signal);
+  font-size: 1rem;
+}
+
+.DBC-Card-Value {
+  color: var(--DBC-Card-Value);
+  font-weight: 500;
+  font-size: 1.05rem;
+}
+
+.DBC-Card-Raw {
+  color: var(--DBC-Card-Raw);
+  font-size: 1rem;
+}
+
+.DBC-Card-Data {
+  color: var(--DBC-Card-Data);
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+/* ************************************************** */
+
+:root {
+  --Raw-Time-Time       : #F0E76F;
+  --Raw-Time-Type       : #A5CF83;
+  --Raw-Time-Data       : #FFF0D9;
+  --Raw-Time-CANID      : #FF6060;
+
+  --Raw-Card-Time       : #F0E76F;
+  --Raw-Card-Type       : #A5CF83;
+  --Raw-Card-Data       : #FFF0D9;
+  --Raw-Card-CANID      : #FF6060;
+
+  --DBC-Card-Structure  : #7F7F7F;
+  --DBC-Card-Name       : #ECB65F;
+  --DBC-Card-CANID      : #FF6060;
+  --DBC-Card-Type       : #A5CF83;
+  --DBC-Card-Time       : #F0E76F;
+  --DBC-Card-Signal     : #A5E9DD;
+  --DBC-Card-Value      : #FFF0D9;
+  --DBC-Card-Raw        : #6FBEB2;
+  --DBC-Card-Data       : #FFF0D9;
+
+  --Send-Time-Theme     : #6FBEB2;
+  --Send-Key-Theme      : #A5CF83;
+  --Send-Key-CANID      : #FF6060;
+  --Send-Key-Data       : #1A1A1A;
+  --Send-Type-Text      : #FFF0D9;
+}
+
+#ActiveTransmissions {
+  padding-right: 2%;
+  padding-left: 2%;
+}
+
+.Send-Card {
+  width: 90%;
+}
+
+.Send-Card-Body {
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+}
+
+.Send-Card-Periodic { 
+  border-color: var(--Send-Time-Theme);
+}
+
+.Send-Card-Manual {
+  border-color: var(--Send-Key-Theme);
+}
+
+.Send-Card-CANID {
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  color: var(--Send-Key-CANID);
+  font-weight: 700;
+  font-size: 1.4rem;
+}
+
+.Send-Card-Time {
+  background-color: var(--Send-Time-Theme);
+  color: var(--Send-Type-Text);
+  border: 1px solid #dee2e6;
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.Send-Card-Key {
+  background-color: var(--Send-Key-Theme);
+  color: var(--Send-Type-Text);
+  border: 1px solid #dee2e6;
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.Send-Card-Data {
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  color: var(--Send-Key-Data);
   font-weight: 600;
-  color: #6b7280;
-  margin-bottom: 6px;
+  font-size: 1rem;
+  letter-spacing: 0.05rem;
 }
 
-.badge-mode {
-  font-size: 12px;
+.Send-Card-PlayCard {
+  align-items: center;
+  padding: 10%;
 }
 
-.form-switch .form-check-input {
-  width: 3em;
-  height: 1.5em;
+.Send-Card-PlayCard.form-switch {
+  padding-left: 3rem;
+  margin-bottom: 0;
+}
+
+.Send-Card-PlayCard .Send-Card-PlayIcon {
+  width: 2.8rem;
+  height: 1.4rem;
+  margin-left: -3rem;
+  cursor: pointer;
+}
+
+.Send-Card-PlayIcon {
+  width: 2.8rem;
+  height: 1.4rem;
+}
+
+.Send-Card-PlayIcon:checked {
+  background-color: var(--bs-success);
+  border-color: var(--bs-success);
+}
+
+.Send-Card-Delete {
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
 }

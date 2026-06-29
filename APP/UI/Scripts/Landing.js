@@ -1,15 +1,7 @@
-document.querySelectorAll(".feature-card")
+document.querySelectorAll(".Feature-Card")
   .forEach(card => { 
     card.addEventListener("click", () => {
     const page = card.dataset.page;
     window.location.href = page;
   });
 });
-
-// document.querySelectorAll("#Home-Call")
-//   .forEach(card => { 
-//     card.addEventListener("click", () => {
-//     const page = card.dataset.page;
-//     window.location.href = page;
-//   });
-// });

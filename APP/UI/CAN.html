@@ -34,13 +34,13 @@
 </header>
 <main class="container-fluid">
 
-  <div class="card section-card shadow mb-3">
+  <div class="Section-Card card shadow mb-3">
     
-    <div class="card-header bg-white section-header" data-bs-toggle="collapse" data-bs-target="#RawCANCollapse">
+    <div class="Section-Header card-header bg-white" data-bs-toggle="collapse" data-bs-target="#RawCANCollapse">
       <div class="d-flex justify-content-between align-items-center">
         <div>
-          <h4 class="mb-1 fw-bold">⛓️ Raw CAN Monitor</h4>
-          <div class="text-muted small">Monitor Raw CAN Traffic in Real-Time</div>
+          <h4 class="mb-1 fw-bold">⛓️ CAN Bus Watcher</h4>
+          <div class="text-muted small">Monitor CAN Bus Traffic in Real-Time</div>
         </div>
       </div>
     </div>
@@ -50,44 +50,44 @@
         
         <div class="row g-4 align-items-end">
           <div class="col-md-3">
-            <label class="control-label">Traffic Mode</label>
+            <label class="Form-Label control-label">Traffic Mode</label>
             <select class="form-select" id="RawCANMode">
               <option value="single">Single CAN ID  </option>
               <option value="range" >Range of CAN ID</option>
             </select>
           </div>
           <div class="col-md-2">
-            <label class="control-label" for="RawSingleCAN">CAN ID</label>
-            <input type="text" class="form-control RawSingleCAN" id="RawSingleCAN" placeholder="0x100">
+            <label class="Form-Label control-label" for="RawSingleCAN">CAN ID</label>
+            <input type="text" class="form-control RawSingleCAN" id="RawSingleCAN" placeholder="100">
           </div>
           <div class="col-md-2">
-            <label class="control-label" for="RawRangeStartCAN">Start CAN ID</label>
-            <input type="text" class="form-control RawRangeCAN" id="RawRangeStartCAN" placeholder="0x100">
+            <label class="Form-Label control-label" for="RawRangeStartCAN">Start CAN ID</label>
+            <input type="text" class="form-control RawRangeCAN" id="RawRangeStartCAN" placeholder="100">
           </div>
           <div class="col-md-2">
-            <label class="control-label" for="RawRangeEndCAN">End CAN ID</label>
-            <input type="text" class="form-control RawRangeCAN" id="RawRangeEndCAN"   placeholder="0x7FF">
+            <label class="Form-Label control-label" for="RawRangeEndCAN">End CAN ID</label>
+            <input type="text" class="form-control RawRangeCAN" id="RawRangeEndCAN" placeholder="7FF">
           </div>
           <div class="col-md-3 d-grid">
-            <button class="btn btn-lg btn-outline-dark" id="StartRawCANButton">Start Watching</button>
+            <button class="btn btn-lg btn-dark" id="StartRawCANButton">Start Watching</button>
           </div>
         </div>
 
         <div class="d-flex justify-content-between align-items-center mt-4 mb-3">
           <div>
             <div class="fw-semibold">Rendering Mode</div>
-            <div class="text-muted small">Switch Between Time Stamp Rendering & Card Rendering</div>
+            <div class="text-muted small">Switch Between Time Stamp Based or Card Based Rendering</div>
           </div>
           <div class="form-check form-switch">
             <input class="form-check-input" type="checkbox" id="RawRenderToggle">
-            <label class="form-check-label ms-2" for="RawRenderToggle">Card Mode / Time Stamp Mode</label>
+            <label class="form-check-label ms-2" for="RawRenderToggle">Time Stamp Mode</label>
           </div>
         </div>
 
         <div id="RawCANError" class="text-danger fw-semibold mt-3"></div>
 
-        <div class="monitor-canvas mt-3" id="RawCANCanvas">
-          <div class="text-secondary">Waiting for CAN Monitoring ...</div>
+        <div class="Monitor-Canvas mt-3" id="RawCANCanvas">
+          <div class="text-secondary">Waiting For CAN Traffic ...</div>
         </div>
 
       </div>
@@ -96,13 +96,13 @@
   </div>
 
 
-  <div class="card section-card shadow mb-3">
+  <div class="Section-Card card shadow mb-3">
     
-    <div class="card-header bg-white section-header" data-bs-toggle="collapse" data-bs-target="#DBCCollapse">
+    <div class="Section-Header card-header bg-white" data-bs-toggle="collapse" data-bs-target="#DBCCollapse">
       <div class="d-flex justify-content-between align-items-center">
         <div>
-          <h4 class="mb-1 fw-bold">📅 DBC Watcher</h4>
-          <div class="text-muted small">DBC Message And Signal Watcher</div>
+          <h4 class="mb-1 fw-bold">🔍 DBC Investigator</h4>
+          <div class="text-muted small">Investigate Database CAN (DBC) Messages And Signals</div>
         </div>
       </div>
     </div>
@@ -113,23 +113,21 @@
         <div class="row g-4 align-items-end">
 
           <div class="col-md-5">
-            <label class="control-label">DBC File</label>
+            <label class="Form-Label control-label">DBC File</label>
             <input type="file" class="form-control" accept=".dbc" id="DBCInputFil">
           </div>
           <div class="col-md-4">
-            <label class="control-label">Message ID</label>
+            <label class="Form-Label control-label">Message ID</label>
             <select class="form-select" id="DBCMessageList">
               <option>Select DBC Message</option>
             </select>
           </div>
 
           <div class="col-md-3">
-            <label class="control-label">Signals</label>
+            <label class="Form-Label control-label">Signals</label>
             <div class="dropdown w-100">
               <button class="btn btn-outline-dark dropdown-toggle w-100 text-start" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="DBCSignalListButton">Select Signals</button>
-              <ul class="dropdown-menu w-100 p-3" id="DBCSignalList">
-
-              </ul>
+              <ul class="dropdown-menu w-100 p-3" id="DBCSignalList"></ul>
             </div>
           </div>
 
@@ -141,7 +139,7 @@
 
         <div id="DBCCANError" class="text-danger fw-semibold mt-3"></div>
 
-        <div class="monitor-canvas mt-4" id="DBCCanvas">
+        <div class="Monitor-Canvas mt-3" id="DBCCanvas">
           <div class="text-secondary">Waiting For CAN Traffic ...</div>
         </div>
 
@@ -150,11 +148,87 @@
 
   </div>
 
+
+  <div class="Section-Card card shadow mb-3">
+    
+    <div class="Section-Header card-header bg-white" data-bs-toggle="collapse" data-bs-target="#CANSendCollapse">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <h4 class="mb-1 fw-bold">📬 CAN Mailbox</h4>
+          <div class="text-muted small">Send Messages To CAN Bus</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="CANSendCollapse" class="collapse">
+      <div class="card-body">
+      
+        <div class="mb-4">
+          <div class="d-grid">
+            <button class="btn btn-outline-dark" type="button" data-bs-toggle="collapse" data-bs-target="#AddMessageFormCollapse" aria-expanded="false">+ Add Message</button>
+          </div>
+          <div class="collapse" id="AddMessageFormCollapse">
+            <div class="p-3 border rounded bg-light mb-3">
+
+              <div id="SendCANError" class="text-danger fw-semibold mt-3"></div>
+              
+              <div class="row g-3 align-items-end">  
+                <div class="col-md-2">
+                  <label class="Form-Label control-label" for="SendCANID">CAN ID</label>
+                  <input type="text" class="form-control" id="SendCANID" placeholder="100">
+                </div>
+                <div class="col-md-2">
+                  <label class="Form-Label control-label" for="SendCANLength">Length</label>
+                  <select class="form-select" id="SendCANLength">
+                    <option value="1">1</option><option value="2">2</option><option value="3">3</option>
+                    <option value="4">4</option><option value="5">5</option><option value="6">6</option>
+                    <option value="7">7</option><option value="8" selected>8</option>
+                  </select>
+                </div>
+                <div class="col-md-5">
+                  <label class="Form-Label control-label" for="SendCANData">Data (In Hex)</label>
+                  <input type="text" class="form-control" id="SendCANData" placeholder="01 23 45 67 89 AB CD EF">
+                </div>
+                <div class="col-md-3">
+                  <label class="Form-Label control-label" for="SendCANMode">Transmission Type</label>
+                  <select class="form-select" id="SendCANMode">
+                    <option value="periodic">Periodic</option>
+                    <option value="manual">Manual</option>
+                  </select>
+                </div>
+                <div class="col-md-3" id="PeriodicConfigGroup">
+                  <label class="Form-Label control-label" for="SendCANPeriod">Interval (ms)</label>
+                  <input type="number" class="form-control" id="SendCANPeriod" placeholder="100" min="1">
+                </div>
+                <div class="col-md-3 d-none" id="ManualConfigGroup">
+                  <label class="Form-Label control-label" for="SendCANKey">Trigger Key</label>
+                  <input type="text" class="form-control" id="SendCANKey" placeholder="">
+                </div>
+                <div class="col d-grid">
+                  <button class="btn btn-dark" id="SendMessageAdd">+ Add To Queue</button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <hr class="my-4 text-secondary opacity-25">
+
+        <div class="fw-semibold mb-3">Active Transmissions</div>
+        <div class="row g-3" id="ActiveTransmissions"></div>
+        
+      </div>
+    </div>
+
+  </div>
+
+
 </main>
 
 <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="./Scripts/Common.js"></script>
-<script src="./Scripts/MonitorCAN.js"></script>
+<script src="./Scripts/CAN.js"></script>
 
 </body>
 </html>
